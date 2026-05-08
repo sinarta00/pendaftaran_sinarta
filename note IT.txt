@@ -1,0 +1,26 @@
+PROJECT IT
+
+3 buah website yang dibangun menggunakan Laravel dan filament :
+
+1.web.sinartamjs.com
+2.pendaftaran.sinartamjs.com
+3.form.sinartamjs.com
+
+admin panel access for all web 
+mail :admin@sinartamjs.com
+pass :usersinarta
+
+hostinger account
+mail :sinartamultijasasertifikasi@gmail.com
+pass :@Rigin21
+
+squarespace account
+mail  :administrasi@gmail.com
+pass  :Origin21
+
+https://sinartamjs.com?admin_token=mWpXz4KwHI3ibW6MiJYZ66l4URLKgAqp
+
+otomation administrasi menggunakan appscrip spreadsheet
+
+
+

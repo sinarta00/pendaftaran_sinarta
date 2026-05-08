@@ -1,0 +1,548 @@
+{{-- resources/views/forms/kemnaker.blade.php --}}
+@extends('layouts.form-layout')
+
+@section('form-title', 'Pendaftaran AK3U Kemnaker')
+@section('form-description', 'Silakan isi data diri Anda untuk pendaftaran pelatihan AK3U Kemnaker')
+
+@section('form-content')
+<form action="{{ route('ak3u.store') }}" method="POST" x-data="{ 
+        category: '{{ old('participant_category') }}',
+        status: '{{ old('employment_status') }}'
+    }">
+    @csrf
+    <input type="hidden" name="type" value="kemnaker">
+    
+    <div class="form-row">
+        <!-- Nama Lengkap -->
+        <div class="form-group">
+            <label class="form-label">Nama Lengkap <span class="required">*</span></label>
+            <div class="input-wrapper">
+                <input type="text" name="full_name" class="form-input" placeholder="Isi nama lengkap sesuai KTP" value="{{ old('full_name') }}" required>
+                <div class="input-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+            </div>
+            @error('full_name')
+                <small class="error-text">{{ $message }}</small>
+            @enderror
+        </div>
+        
+        <!-- Email -->
+        <div class="form-group">
+            <label class="form-label">Email <span class="required">*</span></label>
+            <div class="input-wrapper">
+                <input type="email" name="email" class="form-input" placeholder="Masukkan email aktif (Disarankan menggunakan Gmail)" value="{{ old('email') }}" required>
+                <div class="input-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </div>
+            </div>
+            @error('email')
+                <small class="error-text">{{ $message }}</small>
+            @enderror
+        </div>
+    </div>
+
+    <div class="form-group phone-input">
+        <label class="form-label">Nomor Telepon (WhatsApp) <span class="required">*</span></label>
+        <div class="input-wrapper">
+            <span class="phone-prefix">+62</span>
+            <input type="tel" name="phone" class="form-input" placeholder="8xxxxxxxxxx" value="{{ old('phone') }}" required pattern="[0-9]{10,13}" title="Masukkan nomor telepon yang valid (10-13 digit)">
+        </div>
+        <small class="help-text">Masukkan nomor WhatsApp aktif (contoh: 81234567890)</small>
+        @error('phone')
+            <small class="error-text">{{ $message }}</small>
+        @enderror
+    </div>
+
+    <div class="form-row">
+        <!-- Tempat Lahir -->
+        <div class="form-group">
+            <label class="form-label">Tempat Lahir <span class="required">*</span></label>
+            <div class="input-wrapper">
+                <input type="text" name="birth_place" class="form-input" placeholder="Tempat Lahir Anda" value="{{ old('birth_place') }}" required>
+                <div class="input-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                </div>
+            </div>
+            @error('birth_place')
+                <small class="error-text">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <!-- Tanggal Lahir -->
+        <div class="form-group">
+            <label class="form-label">Tanggal Lahir <span class="required">*</span></label>
+            <div class="input-wrapper">
+                <input type="date" name="birth_date" class="form-input" value="{{ old('birth_date') }}" required max="{{ date('Y-m-d', strtotime('-17 years')) }}" min="{{ date('Y-m-d', strtotime('-65 years')) }}">
+                <div class="input-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                </div>
+            </div>
+            @error('birth_date')
+                <small class="error-text">{{ $message }}</small>
+            @enderror
+        </div>
+    </div>
+    
+    <!--Jenis Kelamin-->
+    <div class="form-group">
+        <label class="form-label">Jenis Kelamin <span class="required">*</span></label>
+        <div class="radio-group">
+            <label class="radio-option">
+                <input type="radio" name="gender" value="L" {{ old('gender') == 'L' ? 'checked' : '' }} required>
+                <span class="radio-text">Laki-laki</span>
+            </label>
+            <label class="radio-option">
+                <input type="radio" name="gender" value="P" {{ old('gender') == 'P' ? 'checked' : '' }} required>
+                <span class="radio-text">Perempuan</span>
+            </label>
+        </div>
+        @error('gender')
+            <small class="error-text">{{ $message }}</small>
+        @enderror
+    </div>
+
+
+    <div class="form-row">
+        <!-- Pendidikan Terakhir -->
+        <div class="form-group">
+            <label class="form-label">Pendidikan Terakhir <span class="required">*</span></label>
+            <div class="input-wrapper">
+                <select name="education" class="form-select" required>
+                    <option value="">Pilih Jenjang Pendidikan Terakhir</option>
+                    <option value="D3" {{ old('education') == 'D3' ? 'selected' : '' }}>D3 (Diploma III)</option>
+                    <option value="S1" {{ old('education') == 'S1' ? 'selected' : '' }}>S1 (Sarjana)</option>
+                    <option value="S2" {{ old('education') == 'S2' ? 'selected' : '' }}>S2 (Magister)</option>
+                    <option value="S3" {{ old('education') == 'S3' ? 'selected' : '' }}>S3 (Doktor)</option>
+                </select>
+                <div class="input-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                    </svg>
+                </div>
+            </div>
+            @error('education')
+                <small class="error-text">{{ $message }}</small>
+            @enderror
+        </div>  
+        
+         <!--Jurusan-->
+        <div class="form-group">
+            <label class="form-label">Jurusan <span class="required">*</span></label>
+            <div class="input-wrapper">
+                <input type="text" name="jurusan" class="form-input"
+                       placeholder="Contoh: Teknik Mesin"
+                       value="{{ old('jurusan') }}" required>
+            </div>
+            @error('jurusan')
+                <small class="error-text">{{ $message }}</small>
+            @enderror
+        </div>
+        
+        <!--Nama Institusi-->
+        <div class="form-group">
+            <label class="form-label">Nama Institusi <span class="required">*</span></label>
+            <div class="input-wrapper">
+                <input type="text" 
+                       name="institution_name" 
+                       class="form-input"
+                       placeholder="Contoh: Universitas Mulawarman"
+                       value="{{ old('institution_name') }}"
+                       required="">
+                       
+            </div>
+            @error('institution_name')
+                <small class="error-text">{{ $message }}</small>
+            @enderror
+        </div>
+
+        
+        <!--Domisili-->
+        <div class="form-group">
+            <label class="form-label">Domisili Kabupaten/Kota <span class="required">*</span></label>
+            <div class="input-wrapper">
+                <input type="text" name="domisili_kota" class="form-input"
+                       placeholder="Contoh: Samarinda"
+                       value="{{ old('domisili_kota') }}" required>
+            </div>
+            @error('domisili_kota')
+                <small class="error-text">{{ $message }}</small>
+            @enderror
+        </div>
+
+    </div>
+        <!-- Jadwal Training -->
+        <div class="form-group">
+            <label class="form-label">Jadwal Training <span class="required">*</span></label>
+            <div class="input-wrapper">
+                <select name="training_schedule_id" class="form-select" required>
+                    <option value="">Pilih Jadwal Yang Akan Diikuti</option>
+                    @foreach($schedules as $schedule)
+                        <option value="{{ $schedule->id }}" {{ old('training_schedule_id') == $schedule->id ? 'selected' : '' }}>
+                            {{ $schedule->name }} ({{ $schedule->start_date->format('d/m/Y') }} - {{ $schedule->end_date->format('d/m/Y') }})
+                        </option>
+                    @endforeach
+                </select>
+                <div class="input-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                </div>
+            </div>
+            @error('training_schedule_id')
+                <small class="error-text">{{ $message }}</small>
+            @enderror
+        </div>
+    
+    <!-- Golongan Darah -->
+    <div class="form-group">
+        <label class="form-label">
+            Golongan Darah <span class="required">*</span>
+        </label>
+    
+        <div class="input-wrapper">
+            <select name="golongan_darah" class="form-select" required>
+                <option value="">Pilih Golongan Darah</option>
+                <option value="A"  {{ old('golongan_darah') == 'A'  ? 'selected' : '' }}>A</option>
+                <option value="B"  {{ old('golongan_darah') == 'B'  ? 'selected' : '' }}>B</option>
+                <option value="AB" {{ old('golongan_darah') == 'AB' ? 'selected' : '' }}>AB</option>
+                <option value="O"  {{ old('golongan_darah') == 'O'  ? 'selected' : '' }}>O</option>
+            </select>
+    
+            <div class="input-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2C12 2 7 8 7 12a5 5 0 0 0 10 0c0-4-5-10-5-10z"></path>
+                </svg>
+            </div>
+        </div>
+    
+        @error('golongan_darah')
+            <small class="error-text">{{ $message }}</small>
+        @enderror
+    </div>
+
+
+    <!-- Ukuran Baju -->
+    <div class="form-group">
+        <label class="form-label">Ukuran Baju <span class="required">*</span></label>
+        <div class="input-wrapper">
+                <select name="shirt_size" class="form-select" required>
+                    <option value="">Pilih Ukuran Baju</option>
+                    <option value="S" {{ old('shirt_size') == 'S' ? 'selected' : '' }}>S (Small)</option>
+                    <option value="M" {{ old('shirt_size') == 'M' ? 'selected' : '' }}>M (Medium)</option>
+                    <option value="L" {{ old('shirt_size') == 'L' ? 'selected' : '' }}>L (Large)</option>
+                    <option value="XL" {{ old('shirt_size') == 'XL' ? 'selected' : '' }}>XL (Extra Large)</option>
+                    <option value="XXL" {{ old('shirt_size') == 'XXL' ? 'selected' : '' }}>XXL (Double XL)</option>
+                </select>
+                <div class="input-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                </div>
+            </div>
+            @error('shirt_size')
+                <small class="error-text">{{ $message }}</small>
+            @enderror
+        </div>
+        
+
+
+    <!-- Kategori Peserta -->
+    <div class="form-group">
+        <label class="form-label">Kategori Peserta <span class="required">*</span></label>
+        <div class="radio-group">
+            <label class="radio-option">
+                <input type="radio" name="participant_category" value="personal" x-model="category" {{ old('participant_category') == 'personal' ? 'checked' : '' }} required>
+                <span class="radio-text">Personal</span>
+            </label>
+            <label class="radio-option">
+                <input type="radio" name="participant_category" value="company" x-model="category" {{ old('participant_category') == 'company' ? 'checked' : '' }} required>
+                <span class="radio-text">Utusan Perusahaan</span>
+            </label>
+        </div>
+        @error('participant_category')
+            <small class="error-text">{{ $message }}</small>
+        @enderror
+
+        <!-- Company Fields -->
+        <div id="companyFields" class="company-fields" x-show="category === 'company'" x-transition style="display: {{ old('participant_category') == 'company' ? 'block' : 'none' }}">
+            <div class="company-header">
+                <h4>📋 Informasi Perusahaan</h4>
+                <p>Lengkapi data perusahaan yang menugaskan Anda</p>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Nama Perusahaan <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <input type="text" name="company_name" class="form-input" placeholder="Masukkan nama perusahaan" value="{{ old('company_name') }}">
+                    <div class="input-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                    </div>
+                </div>
+                @error('company_name')
+                    <small class="error-text">{{ $message }}</small>
+                @enderror
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Alamat Perusahaan <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <textarea name="company_address" class="form-textarea" rows="3" placeholder="Masukkan alamat lengkap perusahaan">{{ old('company_address') }}</textarea>
+                </div>
+                @error('company_address')
+                    <small class="error-text">{{ $message }}</small>
+                @enderror
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Nomor Telepon Perusahaan <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <input type="tel" name="company_phone" class="form-input" placeholder="Masukkan nomor telepon perusahaan" value="{{ old('company_phone') }}" pattern="[0-9+\-\s\(\)]{10,15}">
+                    <div class="input-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                    </div>
+                </div>
+                @error('company_phone')
+                    <small class="error-text">{{ $message }}</small>
+                @enderror
+            </div>
+        </div>
+    </div>
+    
+      <!--status pekerjaan-->
+        <div class="form-group" 
+            x-show="category === 'personal'" 
+            x-transition>
+            <label class="form-label">Status Pekerjaan <span class="required">*</span></label>
+            <div class="input-wrapper">
+                <select name="employment_status" 
+                        class="form-select" 
+                        x-model="status"
+                        x-bind:required="category === 'personal'">
+                    <option value="">Pilih Status</option>
+                    <option value="Belum bekerja">Belum Bekerja</option>
+                    <option value="Fresh Graduate">Fresh Graduate</option>
+                    <option value="Karyawan">Karyawan</option>
+                    <option value="Kontrak">Kontrak</option>
+                </select>
+            </div>
+            @error('employment_status')
+                <small class="error-text">{{ $message }}</small>
+            @enderror
+    
+                <!-- Nama Perusahaan Jika Bekerja -->
+                <div x-show="status === 'Karyawan' || status === 'Kontrak'" x-transition>
+                    <div class="form-group" style="margin-top:15px;">
+                        <label class="form-label">Nama Perusahaan <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <input type="text" name="work_company_name" class="form-input"
+                                   placeholder="Masukkan nama perusahaan"
+                                   value="{{ old('work_company_name') }}">
+                        </div>
+                        @error('work_company_name')
+                            <small class="error-text">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+        </div>
+    
+    <!--Tujuan Pelatihan-->
+    <div class="form-group">
+      <label class="form-label">Tujuan Mengikuti Pelatihan <span class="required">*</span></label>
+        <div class="input-wrapper">
+            <select name="training_purpose" class="form-select" required>
+                <option value="">Pilih Tujuan</option>
+                <option value="Syarat kerja" {{ old('training_purpose') == 'Syarat kerja' ? 'selected' : '' }}>
+                    Syarat Kerja
+                </option>
+                <option value="Upgrade Skill" {{ old('training_purpose') == 'Upgrade Skill' ? 'selected' : '' }}>
+                    Upgrade Skill
+                </option>
+                <option value="Syarat Tender" {{ old('training_purpose') == 'Syarat Tender' ? 'selected' : '' }}>
+                    Syarat Tender
+                </option>
+            </select>
+        </div>
+        @error('training_purpose')
+            <small class="error-text">{{ $message }}</small>
+        @enderror
+    </div>
+
+
+    <!-- Sumber Informasi -->
+    <div class="form-group">
+        <label class="form-label">Sumber Informasi <span class="required">*</span></label>
+        <div class="input-wrapper">
+            <select name="information_source" class="form-select" required>
+                <option value="">Pilih Sumber Informasi</option>
+                <option value="rekan" {{ old('information_source') == 'rekan' ? 'selected' : '' }}>👥 Rekan/Teman</option>
+                <option value="poster" {{ old('information_source') == 'poster' ? 'selected' : '' }}>📄 Poster</option>
+                <option value="banner" {{ old('information_source') == 'banner' ? 'selected' : '' }}>🪧 Banner</option>
+                <option value="mediasocial" {{ old('information_source') == 'mediasocial' ? 'selected' : '' }}>📱 Media Sosial</option>
+            </select>
+            <div class="input-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+            </div>
+        </div>
+        @error('information_source')
+            <small class="error-text">{{ $message }}</small>
+        @enderror
+    </div>
+
+    <!-- Kode Referral -->
+    <!--<div class="form-group">-->
+    <!--    <label class="form-label">Kode Referral <span style="color: #666;">(Opsional)</span></label>-->
+    <!--    <div class="input-wrapper">-->
+    <!--        <input type="text" name="referral_code" class="form-input" placeholder="Masukkan kode referral jika ada" value="{{ old('referral_code') }}">-->
+    <!--        <div class="input-icon">-->
+    <!--            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">-->
+    <!--                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>-->
+    <!--            </svg>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--    <small class="help-text">Jika Anda memiliki kode referral dari rekan/partner, masukkan di sini</small>-->
+    <!--    @error('referral_code')-->
+    <!--        <small class="error-text">{{ $message }}</small>-->
+    <!--    @enderror-->
+    <!--</div>-->
+
+    <!-- Agreement -->
+    <div class="form-group checkbox-terms">
+        <label>
+            <input type="checkbox" name="agreement_checkbox" value="1" required>
+            <span class="checkbox-text">Dengan ini Saya menyatakan dengan sesungguhnya bahwa semua informasi yang disampaikan adalah <strong>benar adanya</strong> dan siap mengikuti seluruh rangkaian pelatihan AK3U Kemnaker sesuai dengan jadwal yang telah ditentukan.</span>
+        </label>
+        @error('agreement_checkbox')
+            <small class="error-text">{{ $message }}</small>
+        @enderror
+    </div>
+    <!-- reCAPTCHA -->
+<div class="form-group" style="margin: 2rem 0;">
+    <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}" style="display: flex; justify-content: center;"></div>
+    @error('g-recaptcha-response')
+        <small class="error-text" style="text-align: center; display: block; margin-top: 0.5rem;">{{ $message }}</small>
+    @enderror
+</div>
+
+    <button type="submit" class="btn-submit" id="submitBtn">
+    <span class="btn-text">Daftar Sekarang</span>
+    <span class="btn-loading" style="display: none;">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="width: 1rem; height: 1rem; margin-right: 0.5rem;"></span>
+        Sedang Memproses...
+    </span>
+    <span class="btn-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12,5 19,12 12,19"></polyline>
+        </svg>
+    </span>
+</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    
+    form.addEventListener('submit', function(e) {
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (!recaptchaResponse) {
+            e.preventDefault();
+            alert('Harap centang "I\'m not a robot"');
+            return false;
+        }
+        
+        submitBtn.disabled = true;
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline-flex';
+        btnLoading.style.alignItems = 'center';
+    });
+});
+</script>
+</form>
+
+<script>
+// AK3U Kemnaker Form Enhancement
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Alpine.js category state from old value
+    const oldCategory = '{{ old("participant_category") }}';
+    if (oldCategory) {
+        // Set Alpine.js data
+        setTimeout(() => {
+            const form = document.querySelector('[x-data]');
+            if (form && form._x_dataStack) {
+                form._x_dataStack[0].category = oldCategory;
+            }
+        }, 100);
+    }
+    
+    // Manual toggle for company fields (fallback)
+    const categoryRadios = document.querySelectorAll('input[name="participant_category"]');
+    categoryRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            const companyFields = document.getElementById('companyFields');
+            if (companyFields) {
+                if (this.value === 'company') {
+                    companyFields.style.display = 'block';
+                    companyFields.classList.add('active');
+                    setTimeout(() => {
+                        companyFields.classList.add('slide-in');
+                    }, 10);
+                    companyFields.querySelectorAll('input, textarea, select').forEach(input => {
+                        input.setAttribute('required', 'required');
+                    });
+                } else {
+                    companyFields.classList.remove('slide-in');
+                    setTimeout(() => {
+                        companyFields.style.display = 'none';
+                        companyFields.classList.remove('active');
+                    }, 300);
+                    companyFields.querySelectorAll('input, textarea, select').forEach(input => {
+                        input.removeAttribute('required');
+                        input.value = '';
+                    });
+                }
+            }
+        });
+    });
+    
+    // Trigger initial state
+    const checkedRadio = document.querySelector('input[name="participant_category"]:checked');
+    if (checkedRadio) {
+        checkedRadio.dispatchEvent(new Event('change'));
+    }
+});
+</script>
+@endsection

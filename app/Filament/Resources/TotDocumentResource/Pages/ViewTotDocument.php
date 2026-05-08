@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Filament\Resources\TotDocumentResource\Pages;
+
+use App\Filament\Resources\TotDocumentResource;
+use Filament\Actions;
+use Filament\Resources\Pages\ViewRecord;
+
+class ViewTotDocument extends ViewRecord
+{
+    protected static string $resource = TotDocumentResource::class;
+}
