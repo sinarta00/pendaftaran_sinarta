@@ -3,6 +3,7 @@
 
 namespace App\Filament\Resources;
 
+use Illuminate\Support\Facades\Storage;
 use App\Filament\Resources\DocumentUploadResource\Pages;
 use App\Models\DocumentUpload;
 use Filament\Forms;
@@ -131,56 +132,87 @@ class DocumentUploadResource extends Resource
             ->actions([
             Tables\Actions\ViewAction::make(),
             Tables\Actions\ActionGroup::make([
-                Tables\Actions\Action::make('download_zip')
-                    ->label('Download ZIP')
-                    ->icon('heroicon-o-archive-box-arrow-down')
-                    ->action(function (DocumentUpload $record) {
-                        return response()->streamDownload(function () use ($record) {
-                            $zip = new \ZipArchive();
-                            $fileName = $record->participant->registration_number . '_documents.zip';
-                            $tempFile = tempnam(sys_get_temp_dir(), $fileName);
-                            
-                            if ($zip->open($tempFile, \ZipArchive::CREATE) === TRUE) {
-                                $fields = [
-                                    'scan_diploma' => 'Ijazah',
-                                    'scan_ktp' => 'KTP', 
-                                    'scan_photo' => 'Foto',
-                                    'health_certificate' => 'Surat_Sehat',
-                                    'cv_file' => 'CV',
-                                    'integrity_pact' => 'Pakta_Integritas',
-                                    'work_certificate' => 'Surat_Kerja',
-                                    'company_npwp' => 'NPWP_Perusahaan'
-                                ];
-                                
-                                foreach ($fields as $field => $name) {
-                                    if ($record->$field && Storage::disk('public')->exists($record->$field)) {
-                                        $filePath = Storage::disk('public')->path($record->$field);
-                                        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
-                                        $zip->addFile($filePath, $name . '.' . $extension);
-                                    }
+            Tables\Actions\Action::make('download_zip')
+                ->label('Download ZIP')
+                ->icon('heroicon-o-archive-box-arrow-down')
+                ->action(function (DocumentUpload $record) {
+
+                    $zip = new \ZipArchive();
+
+                    $fileName = $record->participant->registration_number . '_documents.zip';
+
+                    $tempFile = storage_path('app/temp/' . $fileName);
+
+                    // pastikan folder temp ada
+                    if (!file_exists(storage_path('app/temp'))) {
+                        mkdir(storage_path('app/temp'), 0755, true);
+                    }
+
+                    if ($zip->open($tempFile, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
+
+                        $fields = [
+                            'scan_diploma' => 'Ijazah',
+                            'scan_ktp' => 'KTP',
+                            'scan_photo' => 'Foto',
+                            'health_certificate' => 'Surat_Sehat',
+                            'cv_file' => 'CV',
+                            'integrity_pact' => 'Pakta_Integritas',
+                            'work_certificate' => 'Surat_Kerja',
+                            'company_npwp' => 'NPWP_Perusahaan',
+                        ];
+
+                        foreach ($fields as $field => $name) {
+
+                            if ($record->$field) {
+
+                                $filePath = storage_path('app/public/' . $record->$field);
+
+                                if (file_exists($filePath)) {
+
+                                    $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+                                    $zip->addFile(
+                                        $filePath,
+                                        $name . '.' . $extension
+                                    );
                                 }
-                                $zip->close();
                             }
-                            
-                            readfile($tempFile);
-                            unlink($tempFile);
-                        }, $fileName);
-                    }),
-                Tables\Actions\Action::make('download_diploma')
-                    ->label('Download Ijazah')
-                    ->icon('heroicon-o-document')
-                    ->visible(fn (DocumentUpload $record): bool => (bool) $record->scan_diploma)
-                    ->action(fn (DocumentUpload $record) => Storage::disk('public')->download($record->scan_diploma)),
-                Tables\Actions\Action::make('download_ktp')
-                    ->label('Download KTP')
-                    ->icon('heroicon-o-identification')
-                    ->visible(fn (DocumentUpload $record): bool => (bool) $record->scan_ktp)
-                    ->action(fn (DocumentUpload $record) => Storage::disk('public')->download($record->scan_ktp)),
-                Tables\Actions\Action::make('download_photo')
-                    ->label('Download Foto')
-                    ->icon('heroicon-o-photo')
-                    ->visible(fn (DocumentUpload $record): bool => (bool) $record->scan_photo)
-                    ->action(fn (DocumentUpload $record) => Storage::disk('public')->download($record->scan_photo)),
+                        }
+
+                        $zip->close();
+                    }
+
+                    return response()->download($tempFile)->deleteFileAfterSend(true);
+                }), 
+            Tables\Actions\Action::make('download_diploma')
+                ->label('Download Ijazah')
+                ->icon('heroicon-o-document')
+                ->visible(fn (DocumentUpload $record): bool => (bool) $record->scan_diploma)
+                ->action(function (DocumentUpload $record) {
+                    return response()->download(
+                        storage_path('app/public/' . $record->scan_diploma)
+                    );
+                }),
+
+            Tables\Actions\Action::make('download_ktp')
+                ->label('Download KTP')
+                ->icon('heroicon-o-identification')
+                ->visible(fn (DocumentUpload $record): bool => (bool) $record->scan_ktp)
+                ->action(function (DocumentUpload $record) {
+                    return response()->download(
+                        storage_path('app/public/' . $record->scan_ktp)
+                    );
+                }),
+
+            Tables\Actions\Action::make('download_photo')
+                ->label('Download Foto')
+                ->icon('heroicon-o-photo')
+                ->visible(fn (DocumentUpload $record): bool => (bool) $record->scan_photo)
+                ->action(function (DocumentUpload $record) {
+                    return response()->download(
+                        storage_path('app/public/' . $record->scan_photo)
+                    );
+                }),
             ])
         ]);
     }
