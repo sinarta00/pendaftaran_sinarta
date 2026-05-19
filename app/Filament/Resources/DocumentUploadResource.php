@@ -132,58 +132,58 @@ class DocumentUploadResource extends Resource
             ->actions([
             Tables\Actions\ViewAction::make(),
             Tables\Actions\ActionGroup::make([
-            Tables\Actions\Action::make('download_zip')
-                ->label('Download ZIP')
-                ->icon('heroicon-o-archive-box-arrow-down')
-                ->action(function (DocumentUpload $record) {
+            // Tables\Actions\Action::make('download_zip')
+            //     ->label('Download ZIP')
+            //     ->icon('heroicon-o-archive-box-arrow-down')
+            //     ->action(function (DocumentUpload $record) {
 
-                    $zip = new \ZipArchive();
+            //         $zip = new \ZipArchive();
 
-                    $fileName = $record->participant->registration_number . '_documents.zip';
+            //         $fileName = $record->participant->registration_number . '_documents.zip';
 
-                    $tempFile = storage_path('app/temp/' . $fileName);
+            //         $tempFile = storage_path('app/temp/' . $fileName);
 
-                    // pastikan folder temp ada
-                    if (!file_exists(storage_path('app/temp'))) {
-                        mkdir(storage_path('app/temp'), 0755, true);
-                    }
+            //         // pastikan folder temp ada
+            //         if (!file_exists(storage_path('app/temp'))) {
+            //             mkdir(storage_path('app/temp'), 0755, true);
+            //         }
 
-                    if ($zip->open($tempFile, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
+            //         if ($zip->open($tempFile, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
 
-                        $fields = [
-                            'scan_diploma' => 'Ijazah',
-                            'scan_ktp' => 'KTP',
-                            'scan_photo' => 'Foto',
-                            'health_certificate' => 'Surat_Sehat',
-                            'cv_file' => 'CV',
-                            'integrity_pact' => 'Pakta_Integritas',
-                            'work_certificate' => 'Surat_Kerja',
-                            'company_npwp' => 'NPWP_Perusahaan',
-                        ];
+            //             $fields = [
+            //                 'scan_diploma' => 'Ijazah',
+            //                 'scan_ktp' => 'KTP',
+            //                 'scan_photo' => 'Foto',
+            //                 'health_certificate' => 'Surat_Sehat',
+            //                 'cv_file' => 'CV',
+            //                 'integrity_pact' => 'Pakta_Integritas',
+            //                 'work_certificate' => 'Surat_Kerja',
+            //                 'company_npwp' => 'NPWP_Perusahaan',
+            //             ];
 
-                        foreach ($fields as $field => $name) {
+            //             foreach ($fields as $field => $name) {
 
-                            if ($record->$field) {
+            //                 if ($record->$field) {
 
-                                $filePath = storage_path('app/public/' . $record->$field);
+            //                     $filePath = storage_path('app/public/' . $record->$field);
 
-                                if (file_exists($filePath)) {
+            //                     if (file_exists($filePath)) {
 
-                                    $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+            //                         $extension = pathinfo($filePath, PATHINFO_EXTENSION);
 
-                                    $zip->addFile(
-                                        $filePath,
-                                        $name . '.' . $extension
-                                    );
-                                }
-                            }
-                        }
+            //                         $zip->addFile(
+            //                             $filePath,
+            //                             $name . '.' . $extension
+            //                         );
+            //                     }
+            //                 }
+            //             }
 
-                        $zip->close();
-                    }
+            //             $zip->close();
+            //         }
 
-                    return response()->download($tempFile)->deleteFileAfterSend(true);
-                }), 
+            //         return response()->download($tempFile)->deleteFileAfterSend(true);
+            //     }), 
             Tables\Actions\Action::make('download_diploma')
                 ->label('Download Ijazah')
                 ->icon('heroicon-o-document')
@@ -213,6 +213,7 @@ class DocumentUploadResource extends Resource
                         storage_path('app/public/' . $record->scan_photo)
                     );
                 }),
+                
             ])
         ]);
     }
