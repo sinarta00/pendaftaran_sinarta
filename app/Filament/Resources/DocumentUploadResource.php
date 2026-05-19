@@ -213,6 +213,46 @@ class DocumentUploadResource extends Resource
                         storage_path('app/public/' . $record->scan_photo)
                     );
                 }),
+
+                Tables\Actions\Action::make('download_health_certificate')
+                    ->label('Download Surat Sehat')
+                    ->icon('heroicon-o-heart')
+                    ->visible(fn (DocumentUpload $record): bool => (bool) $record->health_certificate)
+                    ->action(function (DocumentUpload $record) {
+                        return response()->download(
+                            storage_path('app/public/' . $record->health_certificate)
+                        );
+                    }),
+
+                Tables\Actions\Action::make('download_cv')
+                    ->label('Download CV')
+                    ->icon('heroicon-o-document-text')
+                    ->visible(fn (DocumentUpload $record): bool => (bool) $record->cv_file)
+                    ->action(function (DocumentUpload $record) {
+                        return response()->download(
+                            storage_path('app/public/' . $record->cv_file)
+                        );
+                    }),
+
+                Tables\Actions\Action::make('download_integrity_pact')
+                    ->label('Download Pakta Integritas')
+                    ->icon('heroicon-o-shield-check')
+                    ->visible(fn (DocumentUpload $record): bool => (bool) $record->integrity_pact)
+                    ->action(function (DocumentUpload $record) {
+                        return response()->download(
+                            storage_path('app/public/' . $record->integrity_pact)
+                        );
+                    }),
+
+                Tables\Actions\Action::make('download_work_certificate')
+                    ->label('Download Surat Kerja')
+                    ->icon('heroicon-o-briefcase')
+                    ->visible(fn (DocumentUpload $record): bool => (bool) $record->work_certificate)
+                    ->action(function (DocumentUpload $record) {
+                        return response()->download(
+                            storage_path('app/public/' . $record->work_certificate)
+                        );
+                    }),
                 
             ])
         ]);
