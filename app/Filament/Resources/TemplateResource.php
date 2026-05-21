@@ -10,6 +10,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\Action;
+use Illuminate\Support\Facades\Storage;
 
 class TemplateResource extends Resource
 {
@@ -72,9 +74,18 @@ class TemplateResource extends Resource
                 Tables\Filters\TernaryFilter::make('is_active')
                     ->label('Status Aktif'),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+             ->actions([
+                Action::make('download')
+                    ->label('Download')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->iconButton()
+                    ->color('success')
+                    ->url(fn (Template $record): string => Storage::url($record->file_path))
+                    ->openUrlInNewTab(),
+                Tables\Actions\EditAction::make()
+                ->iconButton(),
+                Tables\Actions\DeleteAction::make()
+                ->iconButton(),
             ]);
     }
 
