@@ -49,3 +49,13 @@ Route::post('/pop-documents/{participant}', [PopDocumentController::class, 'stor
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     
 });
+
+Route::get('storage/{path}', function ($path) {
+    $fullPath = storage_path('app/public/' . $path);
+    
+    if (!file_exists($fullPath)) {
+        abort(404);
+    }
+    
+    return response()->file($fullPath);
+})->where('path', '.*');

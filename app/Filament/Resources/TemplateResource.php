@@ -40,6 +40,10 @@ class TemplateResource extends Resource
                 ->disk('public')
                 ->directory('templates')
                 ->acceptedFileTypes(['application/pdf'])
+                ->getUploadedFileNameForStorageUsing(
+                    fn (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file): string => 
+                        str($file->getClientOriginalName())->slug() . '.' . $file->getClientOriginalExtension()
+                )
                 ->required(),
             Forms\Components\Toggle::make('is_active')
                 ->label('Aktif')
