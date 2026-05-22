@@ -17,10 +17,10 @@ class StoreDocumentRequest extends FormRequest
         $participant = $this->route('participant');
         
         $rules = [
-            'ktp_number' => 'required|string|max:20',
+            'ktp_number' => 'required|string|max:16',
             'diploma_number' => 'required|string|max:50',
-            'scan_diploma' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            'scan_ktp' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'scan_diploma' => 'required|file|mimes:pdf|max:2048',
+            'scan_ktp' => 'required|file|mimes:pdf|max:2048',
             'scan_photo' => 'required|file|mimes:jpg,jpeg,png|max:2048',
             'cv_file' => 'required|file|mimes:pdf|max:2048',
             'integrity_pact' => 'required|file|mimes:pdf|max:2048',

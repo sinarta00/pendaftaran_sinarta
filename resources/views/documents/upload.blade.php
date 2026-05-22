@@ -101,7 +101,7 @@
                         <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
                     </div>
                 </div>
-                <input type="file" id="scan_diploma" name="scan_diploma" accept=".pdf,.jpg,.jpeg,.png" required style="display: none;" onchange="handleFileUpload(this, 'scan_diploma')">
+                <input type="file" id="scan_diploma" name="scan_diploma" accept=".pdf" required style="display: none;" onchange="handleFileUpload(this, 'scan_diploma')">
                 <div id="scan_diploma-status" class="file-status"></div>
                 @error('scan_diploma')
                     <small class="error-text">{{ $message }}</small>
@@ -173,10 +173,10 @@
                     <div class="file-upload-content">
                         <div class="file-upload-icon">🏥</div>
                         <div class="file-upload-text">Klik untuk upload Surat Keterangan Sehat</div>
-                        <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
+                        <div class="file-upload-hint">PDF - Max 2MB</div>
                     </div>
                 </div>
-                <input type="file" id="health_certificate" name="health_certificate" accept=".pdf,.jpg,.jpeg,.png" required style="display: none;" onchange="handleFileUpload(this, 'health_certificate')">
+                <input type="file" id="health_certificate" name="health_certificate" accept=".pdf" required style="display: none;" onchange="handleFileUpload(this, 'health_certificate')">
                 <div id="health_certificate-status" class="file-status"></div>
                 @error('health_certificate')
                     <small class="error-text">{{ $message }}</small>
@@ -199,13 +199,13 @@
             <div class="file-upload-content">
                 <div class="file-upload-icon">📋</div>
                 <div class="file-upload-text">Klik untuk upload Surat Kerja</div>
-                <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
+                <div class="file-upload-hint">PDF - Max 2MB</div>
             </div>
         </div>
         <input type="file" 
                id="work_certificate" 
                name="work_certificate" 
-               accept=".pdf,.jpg,.jpeg,.png" 
+               accept=".pdf" 
                style="display: none;" 
                onchange="handleFileUpload(this, 'work_certificate')">
         <div id="work_certificate-status" class="file-status"></div>
@@ -259,10 +259,10 @@
                         <div class="file-upload-content">
                             <div class="file-upload-icon">📋</div>
                             <div class="file-upload-text">Klik untuk upload Surat Kerja</div>
-                            <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
+                            <div class="file-upload-hint">PDF - Max 2MB</div>
                         </div>
                     </div>
-                    <input type="file" id="work_certificate" name="work_certificate" accept=".pdf,.jpg,.jpeg,.png" required style="display: none;" onchange="handleFileUpload(this, 'work_certificate')">
+                    <input type="file" id="work_certificate" name="work_certificate" accept=".pdf" required style="display: none;" onchange="handleFileUpload(this, 'work_certificate')">
                     <div id="work_certificate-status" class="file-status"></div>
                     @error('work_certificate')
                         <small class="error-text">{{ $message }}</small>
@@ -275,10 +275,10 @@
                         <div class="file-upload-content">
                             <div class="file-upload-icon">🏛️</div>
                             <div class="file-upload-text">Klik untuk upload NPWP</div>
-                            <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
+                            <div class="file-upload-hint">PDF - Max 2MB</div>
                         </div>
                     </div>
-                    <input type="file" id="company_npwp" name="company_npwp" accept=".pdf,.jpg,.jpeg,.png" required style="display: none;" onchange="handleFileUpload(this, 'company_npwp')">
+                    <input type="file" id="company_npwp" name="company_npwp" accept=".pdf" required style="display: none;" onchange="handleFileUpload(this, 'company_npwp')">
                     <div id="company_npwp-status" class="file-status"></div>
                     @error('company_npwp')
                         <small class="error-text">{{ $message }}</small>
