@@ -215,6 +215,23 @@
         background: linear-gradient(135deg, #f59e0b, #d97706);
     }
 
+    .card-pop .card-icon {
+        background: linear-gradient(135deg, #ef4444, #b91c1c);
+    }
+
+    .card-pop .card-title {
+        color: #ef4444;
+    }
+
+    .card-pop .card-button {
+        background: linear-gradient(135deg, #ef4444, #b91c1c);
+    }
+
+    .card-pop .card-button:hover {
+        background: linear-gradient(135deg, #b91c1c, #991b1b);
+        transform: translateY(-2px);
+    }
+
     .program-card:hover .card-icon {
         transform: scale(1.1) rotate(5deg);
     }
@@ -505,6 +522,25 @@
                 </p>
                 <a href="{{ route('skp.form') }}" class="card-button">
                     <span>Daftar SKP</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12,5 19,12 12,19"></polyline>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- POP BNSP Card -->
+            <div class="program-card card-pop">
+                <div class="card-icon">
+                    POP
+                </div>
+                <h2 class="card-title">POP BNSP</h2>
+                <p class="card-description">
+                    Pelatihan Pengawas Operasional Pertama (POP) bersertifikat BNSP untuk 
+                    para supervisor di industri pertambangan. Tingkatkan kompetensi pengawasan K3 Anda.
+                </p>
+                <a href="{{ route('pop.form') }}" class="card-button">
+                    <span>Daftar POP</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                         <polyline points="12,5 19,12 12,19"></polyline>
