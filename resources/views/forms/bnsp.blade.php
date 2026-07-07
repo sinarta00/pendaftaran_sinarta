@@ -114,6 +114,19 @@
     </div>
 
     <div class="form-row">
+            <!--Domisili-->
+        <div class="form-group">
+            <label class="form-label">Domisili Kabupaten/Kota <span class="required">*</span></label>
+            <div class="input-wrapper">
+                <input type="text" name="domisili_kota" class="form-input"
+                       placeholder="Contoh: Samarinda"
+                       value="{{ old('domisili_kota') }}" required>
+            </div>
+            @error('domisili_kota')
+                <small class="error-text">{{ $message }}</small>
+            @enderror
+        </div>
+
         <!-- Pendidikan Terakhir BNSP -->
         <div class="form-group">
             <label class="form-label">Pendidikan Terakhir <span class="required">*</span></label>
@@ -137,20 +150,7 @@
                 <small class="error-text">{{ $message }}</small>
             @enderror
         </div>
-        
-        <!--Jurusan-->
-        <div class="form-group">
-            <label class="form-label">Jurusan <span class="required">*</span></label>
-            <div class="input-wrapper">
-                <input type="text" name="jurusan" class="form-input"
-                       placeholder="Contoh: Teknik Mesin"
-                       value="{{ old('jurusan') }}" required>
-            </div>
-            @error('jurusan')
-                <small class="error-text">{{ $message }}</small>
-            @enderror
-        </div>
-        
+
         <!--Nama Institusi-->
         <div class="form-group">
             <label class="form-label">Nama Institusi <span class="required">*</span></label>
@@ -168,18 +168,20 @@
             @enderror
         </div>
         
-         <!--Domisili-->
+        <!--Jurusan-->
         <div class="form-group">
-            <label class="form-label">Domisili Kabupaten/Kota <span class="required">*</span></label>
+            <label class="form-label">Jurusan <span class="required">*</span></label>
             <div class="input-wrapper">
-                <input type="text" name="domisili_kota" class="form-input"
-                       placeholder="Contoh: Samarinda"
-                       value="{{ old('domisili_kota') }}" required>
+                <input type="text" name="jurusan" class="form-input"
+                       placeholder="Contoh: Teknik Mesin"
+                       value="{{ old('jurusan') }}" required>
             </div>
-            @error('domisili_kota')
+            @error('jurusan')
                 <small class="error-text">{{ $message }}</small>
             @enderror
         </div>
+        
+     
     </div>
     
         <!-- Jadwal Training -->

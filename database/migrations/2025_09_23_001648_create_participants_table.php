@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('company_name')->nullable();
             $table->text('company_address')->nullable();
             $table->string('company_phone')->nullable();
-            $table->enum('information_source', ['rekan', 'poster', 'banner', 'mediasocial']);
+            $table->enum('information_source', ['Rekan', 'Poster', 'Banner', 'Instagram', 'Facebook', 'Tiktok']);
             $table->string('referral_code')->nullable();
             $table->boolean('agreement_checkbox')->default(false);
             $table->enum('status', ['pending', 'dp_paid', 'full_paid'])->default('pending');
