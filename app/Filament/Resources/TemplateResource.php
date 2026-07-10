@@ -32,6 +32,7 @@ class TemplateResource extends Resource
                     'integrity_pact' => 'Pakta Integritas',
                     'kemnaker_integrity_pact' => 'Pakta Integritas Kemnaker',
                     'bnsp_integrity_pact' => 'Pakta Integritas BNSP',
+                    'skp_integrity_pact' => 'Dokumen SKP',
                     'other' => 'Lainnya'
                 ])
                 ->required(),

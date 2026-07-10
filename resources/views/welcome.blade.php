@@ -456,7 +456,7 @@
             <!-- AK3U Kemnaker Card -->
             <div class="program-card card-kemnaker">
                 <div class="card-icon">
-                    AK3
+                    KRI
                 </div>
                 <h2 class="card-title">AK3U Kemnaker</h2>
                 <p class="card-description">

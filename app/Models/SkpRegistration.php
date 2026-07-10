@@ -34,7 +34,12 @@ class SkpRegistration extends Model
         'status',
         'invoice_number',
         'payment_date',
-        'total_payment'
+        'total_payment',
+        'skp__later',
+        'license_later',
+        'activity_report_later',
+        'company_application_later'
+
     ];
 
     protected $casts = [

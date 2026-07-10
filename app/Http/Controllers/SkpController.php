@@ -9,18 +9,22 @@ use App\Mail\SkpPaymentConfirmation;
 use App\Models\SkpRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Template;
 
 class SkpController extends Controller
 {
     public function showForm()
-    {
-        return view('forms.skp');
+    {   
+         $templates = Template::where('is_active', true)->get();
+         
+
+        return view('forms.skp', compact('templates'));
     }
 
     public function store(StoreSkpRequest $request)
     {
         $data = $request->validated();
-        
+
         // Handle file uploads
         foreach ($request->allFiles() as $key => $file) {
             $path = $file->store('skp-documents', 'public');

@@ -36,6 +36,10 @@ class StoreSkpRequest extends FormRequest
             'ak3u_certificate' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'photo_file' => 'required|file|mimes:jpg,jpeg,png|max:2048',
             'full_work_certificate' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'company_application_later' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'skp__later' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'license_later' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'activity_report_later' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048'
         ];
     }
 }

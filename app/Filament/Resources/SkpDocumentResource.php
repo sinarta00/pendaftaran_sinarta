@@ -73,6 +73,30 @@ class SkpDocumentResource extends Resource
                         ->downloadable()
                         ->openable()
                         ->disabled(),
+                    Forms\Components\FileUpload::make('company_application_later')
+                        ->label('Surat Permohonan Perusahaan')
+                        ->disk('public')
+                        ->downloadable()
+                        ->openable()
+                        ->disabled(),
+                    Forms\Components\FileUpload::make('skp__later')
+                        ->label('SKP')
+                        ->disk('public')
+                        ->downloadable()
+                        ->openable()
+                        ->disabled(),
+                    Forms\Components\FileUpload::make('license_later')
+                        ->label('Izin')
+                        ->disk('public')
+                        ->downloadable()
+                        ->openable()
+                        ->disabled(),
+                    Forms\Components\FileUpload::make('activity_report_later')
+                        ->label('Laporan Kegiatan')
+                        ->disk('public')
+                        ->downloadable()
+                        ->openable()
+                        ->disabled(),   
                 ]),
         ]);
     }

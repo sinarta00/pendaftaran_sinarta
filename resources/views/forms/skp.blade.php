@@ -1,13 +1,52 @@
 {{-- resources/views/forms/skp.blade.php --}}
 @extends('layouts.form-layout')
 
+<style>
+    .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+    color: var(--gray-800);
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+</style>
+
 @section('form-title', 'Pendaftaran/Perpanjangan SKP')
 @section('form-description', 'Silakan lengkapi semua data dan dokumen yang diperlukan untuk pendaftaran atau perpanjangan SKP')
-
 @section('form-content')
 <form action="{{ route('skp.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
-    
+    <div class="form-section">
+        <div class="section-header">
+            <h3>Download Template Berkas</h3>
+            <p>Silakan download template berkas yang diperlukan untuk pendaftaran atau perpanjangan SKP</p>
+
+           <div class="form-group mt-4 flex flex-wrap gap-3">
+                @foreach($templates->filter(function($template)  {
+                    return str_starts_with($template->type, "skp_integrity_pact");
+                }) as $template)
+
+                    <a href="{{ url('storage/' . $template->file_path) }}" 
+                    class="download-btn" 
+                    target="_blank">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="7,10 12,15 17,10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download {{ $template->name }}
+                    </a>
+
+                @endforeach
+            </div>
+        </div>
+    </div>
     <!-- Personal Information Section -->
     <div class="form-section">
         <div class="section-header">
@@ -177,7 +216,7 @@
         <div class="form-group">
             <label class="form-label">Jenis Layanan <span class="required">*</span></label>
             <div class="input-wrapper">
-                <select name="type" class="form-select" required>
+                <select id="type" name="type" class="form-select" required>
                     <option value="">Pilih Jenis Layanan</option>
                     <option value="penerbitan" {{ old('type') == 'penerbitan' ? 'selected' : '' }}>📄 Penerbitan Baru</option>
                     <option value="perpanjangan" {{ old('type') == 'perpanjangan' ? 'selected' : '' }}>🔄 Perpanjangan</option>
@@ -232,10 +271,10 @@
             </div>
         </div>
         
-        <div class="form-row">
+        <div class="form-row" id="renewal-fields" style="display: 'none';">
             <!-- No SK Lama -->
             <div class="form-group">
-                <label class="form-label">No SK Lama <span style="color: #666;">(Untuk Perpanjangan)</span></label>
+                <label class="form-label">No SK Lama</label>
                 <div class="input-wrapper">
                     <input type="text" name="old_sk_number" class="form-input" placeholder="Masukkan nomor SK lama" value="{{ old('old_sk_number') }}">
                     <div class="input-icon">
@@ -250,10 +289,10 @@
                     <small class="error-text">{{ $message }}</small>
                 @enderror
             </div>
-            
+                
             <!-- No Lisensi Lama -->
             <div class="form-group">
-                <label class="form-label">No Lisensi/Kartu Kewenangan Lama <span style="color: #666;">(Untuk Perpanjangan)</span></label>
+                <label class="form-label">No Lisensi/Kartu Kewenangan Lama</label>
                 <div class="input-wrapper">
                     <input type="text" name="old_license_number" class="form-input" placeholder="Masukkan nomor lisensi lama" value="{{ old('old_license_number') }}">
                     <div class="input-icon">
@@ -277,14 +316,47 @@
             <h3>📎 Upload Berkas</h3>
             <p>Lengkapi semua dokumen yang diperlukan (PDF/JPG/PNG - Max 2MB)</p>
         </div>
-        
+
+         <div id="renewal-fields" class='form-row' >
+                 <!-- SKP Lama Upload -->
+                <div class="form-group">
+                    <label class="form-label">Dokumen SKP Lama <span class="required">*</span></label>
+                    <div class="file-upload" onclick="triggerFileInput('skp__later')">
+                        <div class="file-upload-content">
+                            <div class="file-upload-text">Klik untuk upload Dokumen SKP Lama</div>
+                            <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
+                        </div>
+                    </div>
+                    <input type="file" id="skp__later" name="skp__later" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileUpload(this, 'skp__later')">
+                    <div id="skp__later-status" class="file-status"></div>
+                    @error('skp__later')
+                        <small class="error-text">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                {{-- Lisensi lama --}}
+                <div class="form-group">
+                    <label class="form-label">Lisensi Lama <span class="required">*</span></label>
+                    <div class="file-upload" onclick="triggerFileInput('license_later')">
+                        <div class="file-upload-content">
+                            <div class="file-upload-text">Klik untuk upload Lisensi Lama</div>
+                            <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
+                        </div>
+                    </div>
+                    <input type="file" id="license_later" name="license_later" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileUpload(this, 'license_later')">
+                    <div id="license_later-status" class="file-status"></div>
+                    @error('license_later')
+                        <small class="error-text">{{ $message }}</small>
+                    @enderror
+                </div>
+        </div>
+
         <div class="form-row">
             <!-- Scan KTP -->
             <div class="form-group">
                 <label class="form-label">Scan KTP <span class="required">*</span></label>
                 <div class="file-upload" onclick="triggerFileInput('ktp_file')">
                     <div class="file-upload-content">
-                        <div class="file-upload-icon">📄</div>
                         <div class="file-upload-text">Klik untuk upload KTP</div>
                         <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
                     </div>
@@ -301,7 +373,6 @@
                 <label class="form-label">Surat Keterangan Kerja <span class="required">*</span></label>
                 <div class="file-upload" onclick="triggerFileInput('work_certificate')">
                     <div class="file-upload-content">
-                        <div class="file-upload-icon">📋</div>
                         <div class="file-upload-text">Klik untuk upload Surat Keterangan Kerja</div>
                         <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
                     </div>
@@ -320,7 +391,6 @@
                 <label class="form-label">Ijazah Terakhir <span class="required">*</span></label>
                 <div class="file-upload" onclick="triggerFileInput('diploma_file')">
                     <div class="file-upload-content">
-                        <div class="file-upload-icon">🎓</div>
                         <div class="file-upload-text">Klik untuk upload Ijazah</div>
                         <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
                     </div>
@@ -337,7 +407,6 @@
                 <label class="form-label">Sertifikat AK3U Kemnaker <span class="required">*</span></label>
                 <div class="file-upload" onclick="triggerFileInput('ak3u_certificate')">
                     <div class="file-upload-content">
-                        <div class="file-upload-icon">🏆</div>
                         <div class="file-upload-text">Klik untuk upload Sertifikat AK3U</div>
                         <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
                     </div>
@@ -356,7 +425,6 @@
                 <label class="form-label">Pas Foto Latar Belakang Merah <span class="required">*</span></label>
                 <div class="file-upload" onclick="triggerFileInput('photo_file')">
                     <div class="file-upload-content">
-                        <div class="file-upload-icon">📸</div>
                         <div class="file-upload-text">Klik untuk upload Pas Foto</div>
                         <div class="file-upload-hint">JPG/PNG - Max 2MB</div>
                     </div>
@@ -373,7 +441,6 @@
                 <label class="form-label">Surat Keterangan Bekerja Penuh <span class="required">*</span></label>
                 <div class="file-upload" onclick="triggerFileInput('full_work_certificate')">
                     <div class="file-upload-content">
-                        <div class="file-upload-icon">📜</div>
                         <div class="file-upload-text">Klik untuk upload Surat Keterangan Bekerja Penuh</div>
                         <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
                     </div>
@@ -384,6 +451,40 @@
                     <small class="error-text">{{ $message }}</small>
                 @enderror
             </div>
+        </div>
+
+        <div class="form-row">
+             <!-- Surat Surat Permohonan dari Perusahaan -->
+            <div class="form-group">
+                <label class="form-label">Surat Permohonan dari Perusahaan <span class="required">*</span></label>
+                <div class="file-upload" onclick="triggerFileInput('company_application_later')">
+                    <div class="file-upload-content">
+                        <div class="file-upload-text">Klik untuk upload Surat Surat Permohonan dari Perusahaan</div>
+                        <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
+                    </div>
+                </div>
+                <input type="file" id="company_application_later" name="company_application_later" accept=".pdf,.jpg,.jpeg,.png" required style="display: none;" onchange="handleFileUpload(this, 'company_application_later')">
+                <div id="company_application_later-status" class="file-status"></div>
+                @error('company_application_later')
+                    <small class="error-text">{{ $message }}</small>
+                @enderror
+            </div> 
+
+             <!-- Surat Laporan Kegiatan 2 Tahun Terakhir -->
+            <div class="form-group hidden" id="activity_report_later-group">
+                <label class="form-label">Surat Laporan Kegiatan 2 Tahun Terakhir <span class="required">*</span></label>
+                <div class="file-upload" onclick="triggerFileInput('activity_report_later')">
+                    <div class="file-upload-content">
+                        <div class="file-upload-text">Klik untuk upload Surat Laporan Kegiatan 2 Tahun Terakhir</div>
+                        <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
+                    </div>
+                </div>
+                <input type="file" id="activity_report_later" name="activity_report_later" accept=".pdf,.jpg,.jpeg,.png" required style="display: none;" onchange="handleFileUpload(this, 'activity_report_later')">
+                <div id="activity_report_later-status" class="file-status"></div>
+                @error('activity_report_later')
+                    <small class="error-text">{{ $message }}</small>
+                @enderror
+            </div> 
         </div>
     </div>
     <!-- reCAPTCHA -->
@@ -604,6 +705,31 @@ window.formatFileSize = function(bytes) {
 
 // Initialize SKP form
 document.addEventListener('DOMContentLoaded', function() {
+    const typeSelect = document.getElementById('type');
+    const renewalFields = document.getElementById('renewal-fields');
+    const activityReportGroup = document.getElementById('activity_report_later-group');
+
+    function toggleRenewalFields() {
+        if (typeSelect.value == 'perpanjangan') {
+            renewalFields.style.display = 'block';
+            if (activityReportGroup) {
+                activityReportGroup.classList.remove('hidden');
+            }
+        } else {
+            renewalFields.style.display = 'none';
+            if (activityReportGroup) {
+                activityReportGroup.classList.add('hidden');
+            }
+        }
+    }
+
+    toggleRenewalFields();
+    typeSelect.addEventListener('change', function(){
+        console.log("ok", typeSelect.value);
+        toggleRenewalFields();
+    });
+
+
     // NIK input validation (numeric only, max 16 digits)
     const nikInput = document.querySelector('input[name="nik"]');
     if (nikInput) {
