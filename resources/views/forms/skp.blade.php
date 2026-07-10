@@ -271,9 +271,9 @@
             </div>
         </div>
         
-        <div class="form-row" id="renewal-fields" style="display: 'none';">
+        <div class="form-row" >
             <!-- No SK Lama -->
-            <div class="form-group">
+            <div class="form-group hidden hidden-group">
                 <label class="form-label">No SK Lama</label>
                 <div class="input-wrapper">
                     <input type="text" name="old_sk_number" class="form-input" placeholder="Masukkan nomor SK lama" value="{{ old('old_sk_number') }}">
@@ -291,7 +291,7 @@
             </div>
                 
             <!-- No Lisensi Lama -->
-            <div class="form-group">
+            <div class="form-group hidden hidden-group">
                 <label class="form-label">No Lisensi/Kartu Kewenangan Lama</label>
                 <div class="input-wrapper">
                     <input type="text" name="old_license_number" class="form-input" placeholder="Masukkan nomor lisensi lama" value="{{ old('old_license_number') }}">
@@ -317,9 +317,9 @@
             <p>Lengkapi semua dokumen yang diperlukan (PDF/JPG/PNG - Max 2MB)</p>
         </div>
 
-         <div id="renewal-fields" class='form-row' >
+         <div class='form-row' >
                  <!-- SKP Lama Upload -->
-                <div class="form-group">
+                <div class="form-group hidden hidden-group">
                     <label class="form-label">Dokumen SKP Lama <span class="required">*</span></label>
                     <div class="file-upload" onclick="triggerFileInput('skp__later')">
                         <div class="file-upload-content">
@@ -335,7 +335,7 @@
                 </div>
 
                 {{-- Lisensi lama --}}
-                <div class="form-group">
+                <div class="form-group hidden hidden-group">
                     <label class="form-label">Lisensi Lama <span class="required">*</span></label>
                     <div class="file-upload" onclick="triggerFileInput('license_later')">
                         <div class="file-upload-content">
@@ -370,10 +370,10 @@
             
             <!-- Surat Keterangan Kerja -->
             <div class="form-group">
-                <label class="form-label">Surat Keterangan Kerja <span class="required">*</span></label>
+                <label class="form-label">Surat Keterangan Aktif Bekerja <span class="required">*</span></label>
                 <div class="file-upload" onclick="triggerFileInput('work_certificate')">
                     <div class="file-upload-content">
-                        <div class="file-upload-text">Klik untuk upload Surat Keterangan Kerja</div>
+                        <div class="file-upload-text">Klik untuk upload Surat Keterangan Aktif Bekerja</div>
                         <div class="file-upload-hint">PDF/JPG/PNG - Max 2MB</div>
                     </div>
                 </div>
@@ -471,7 +471,7 @@
             </div> 
 
              <!-- Surat Laporan Kegiatan 2 Tahun Terakhir -->
-            <div class="form-group hidden" id="activity_report_later-group">
+            <div class="form-group hidden hidden-group" id="activity_report_later-group">
                 <label class="form-label">Surat Laporan Kegiatan 2 Tahun Terakhir <span class="required">*</span></label>
                 <div class="file-upload" onclick="triggerFileInput('activity_report_later')">
                     <div class="file-upload-content">
@@ -706,26 +706,22 @@ window.formatFileSize = function(bytes) {
 // Initialize SKP form
 document.addEventListener('DOMContentLoaded', function() {
     const typeSelect = document.getElementById('type');
-    const renewalFields = document.getElementById('renewal-fields');
-    const activityReportGroup = document.getElementById('activity_report_later-group');
+    const hiddenGroups = document.querySelectorAll('.hidden-group');
 
     function toggleRenewalFields() {
         if (typeSelect.value == 'perpanjangan') {
-            renewalFields.style.display = 'block';
-            if (activityReportGroup) {
-                activityReportGroup.classList.remove('hidden');
-            }
+            hiddenGroups.forEach(group => {
+                group.classList.remove('hidden');
+            });
         } else {
-            renewalFields.style.display = 'none';
-            if (activityReportGroup) {
-                activityReportGroup.classList.add('hidden');
-            }
+            hiddenGroups.forEach(group => {
+                group.classList.add('hidden');
+            });
         }
     }
 
     toggleRenewalFields();
     typeSelect.addEventListener('change', function(){
-        console.log("ok", typeSelect.value);
         toggleRenewalFields();
     });
 
