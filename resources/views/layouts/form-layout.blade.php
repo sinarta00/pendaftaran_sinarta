@@ -553,8 +553,12 @@
 
     /* Responsive Design */
     @media (max-width: 768px) {
+        .form-page {
+            padding: 0;
+            margin: 0;
+        }
+
         .form-container {
-            margin: 1rem;
             border-radius: 16px;
         }
 
@@ -564,11 +568,19 @@
 
         .header h2 {
             font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .header-desc {
+            font-size: 1rem;
+            text-align: center;
         }
 
         .form-content {
-            padding: 1.5rem;
+            margin: 0;
+            padding: 10px;
         }
+
 
         .radio-group {
             flex-direction: column;

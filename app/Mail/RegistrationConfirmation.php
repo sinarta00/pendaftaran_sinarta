@@ -7,10 +7,11 @@ use App\Models\Participant;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Mail\Concerns\HasEmailAttachment;
 
 class RegistrationConfirmation extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable, SerializesModels, HasEmailAttachment;
 
     public $participant;
 
@@ -21,7 +22,8 @@ class RegistrationConfirmation extends Mailable
 
     public function build()
     {
-        return $this->view('emails.registration-confirmation')
+        $mail = $this->view('emails.registration-confirmation')
                     ->subject('Konfirmasi Pendaftaran AK3U - ' . $this->participant->registration_number);
+        return $this->attachConfiguredFile($mail);
     }
 }

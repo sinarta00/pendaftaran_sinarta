@@ -16,6 +16,38 @@
     transition: all 0.3s ease;
     box-shadow: var(--shadow-sm);
 }
+
+    @media (max-width: 768px) {
+        .download-btn {
+            font-size: 0.8rem;
+            padding: 0.5rem 0.75rem;
+        }
+
+            .header-download {
+            font-size: 1.2rem;
+            font-weight: 600;
+            
+         }
+
+         .input-wrapper input{
+            padding-inline: 0.5rem;
+         }
+
+        .form-select {
+          padding-right: 3rem;
+         }
+
+         .input-wrapper input::placeholder {
+            font-size: 0.8rem;
+         }
+
+         .phone-prefix {
+            font-size: 0.8rem;
+         }
+    }
+    
+
+
 </style>
 
 @section('form-title', 'Pendaftaran/Perpanjangan SKP')
@@ -25,10 +57,10 @@
     @csrf
     <div class="form-section">
         <div class="section-header">
-            <h3>Download Template Berkas</h3>
+            <h3 class="header-download">Download Template Berkas</h3>
             <p>Silakan download template berkas yang diperlukan untuk pendaftaran atau perpanjangan SKP</p>
 
-           <div class="form-group mt-4 flex flex-wrap gap-3">
+           <div class="form-group mt-4 flex flex-wrap gap-3 justify-center">
                 @foreach($templates->filter(function($template)  {
                     return str_starts_with($template->type, "skp_integrity_pact");
                 }) as $template)
@@ -50,7 +82,7 @@
     <!-- Personal Information Section -->
     <div class="form-section">
         <div class="section-header">
-            <h3>👤 Informasi Personal</h3>
+            <h3>Informasi Personal</h3>
             <p>Lengkapi data pribadi Anda dengan benar</p>
         </div>
         
@@ -60,12 +92,6 @@
                 <label class="form-label">Nama Lengkap <span class="required">*</span></label>
                 <div class="input-wrapper">
                     <input type="text" name="full_name" class="form-input" placeholder="Isi nama lengkap sesuai KTP" value="{{ old('full_name') }}" required>
-                    <div class="input-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
                 </div>
                 @error('full_name')
                     <small class="error-text">{{ $message }}</small>
@@ -148,15 +174,9 @@
                 <div class="input-wrapper">
                     <select name="gender" class="form-select" required>
                         <option value="">Pilih Jenis Kelamin</option>
-                        <option value="L" {{ old('gender') == 'L' ? 'selected' : '' }}>👨 Laki-laki</option>
-                        <option value="P" {{ old('gender') == 'P' ? 'selected' : '' }}>👩 Perempuan</option>
+                        <option value="L" {{ old('gender') == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="P" {{ old('gender') == 'P' ? 'selected' : '' }}>Perempuan</option>
                     </select>
-                    <div class="input-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
                 </div>
                 @error('gender')
                     <small class="error-text">{{ $message }}</small>
@@ -171,16 +191,11 @@
                 <div class="input-wrapper">
                     <select name="blood_type" class="form-select" required>
                         <option value="">Pilih Golongan Darah</option>
-                        <option value="A" {{ old('blood_type') == 'A' ? 'selected' : '' }}>🩸 A</option>
-                        <option value="B" {{ old('blood_type') == 'B' ? 'selected' : '' }}>🩸 B</option>
-                        <option value="AB" {{ old('blood_type') == 'AB' ? 'selected' : '' }}>🩸 AB</option>
-                        <option value="O" {{ old('blood_type') == 'O' ? 'selected' : '' }}>🩸 O</option>
+                        <option value="A" {{ old('blood_type') == 'A' ? 'selected' : '' }}>A</option>
+                        <option value="B" {{ old('blood_type') == 'B' ? 'selected' : '' }}>B</option>
+                        <option value="AB" {{ old('blood_type') == 'AB' ? 'selected' : '' }}>AB</option>
+                        <option value="O" {{ old('blood_type') == 'O' ? 'selected' : '' }}>O</option>
                     </select>
-                    <div class="input-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                        </svg>
-                    </div>
                 </div>
                 @error('blood_type')
                     <small class="error-text">{{ $message }}</small>
@@ -199,12 +214,6 @@
                         <option value="S2" {{ old('education') == 'S2' ? 'selected' : '' }}>🎓 S2 (Magister)</option>
                         <option value="S3" {{ old('education') == 'S3' ? 'selected' : '' }}>🎓 S3 (Doktor)</option>
                     </select>
-                    <div class="input-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                        </svg>
-                    </div>
                 </div>
                 @error('education')
                     <small class="error-text">{{ $message }}</small>
@@ -221,12 +230,6 @@
                     <option value="penerbitan" {{ old('type') == 'penerbitan' ? 'selected' : '' }}>📄 Penerbitan Baru</option>
                     <option value="perpanjangan" {{ old('type') == 'perpanjangan' ? 'selected' : '' }}>🔄 Perpanjangan</option>
                 </select>
-                <div class="input-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14,2 14,8 20,8"></polyline>
-                    </svg>
-                </div>
             </div>
             @error('type')
                 <small class="error-text">{{ $message }}</small>
