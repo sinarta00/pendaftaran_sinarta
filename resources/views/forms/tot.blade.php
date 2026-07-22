@@ -449,29 +449,14 @@
         </div>
         
         <div class="form-row">
-             Sumber Informasi 
-            <div class="form-group">
-                <label class="form-label">Sumber Informasi <span class="required">*</span></label>
-                <div class="input-wrapper">
-                    <select name="information_source" class="form-select" required>
-                        <option value="">Pilih Sumber Informasi</option>
-                        <option value="rekan" {{ old('information_source') == 'rekan' ? 'selected' : '' }}>👥 Rekan/Teman</option>
-                        <option value="poster" {{ old('information_source') == 'poster' ? 'selected' : '' }}>📄 Poster</option>
-                        <option value="banner" {{ old('information_source') == 'banner' ? 'selected' : '' }}>🪧 Banner</option>
-                        <option value="mediasocial" {{ old('information_source') == 'mediasocial' ? 'selected' : '' }}>📱 Media Sosial</option>
-                    </select>
-                    <div class="input-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="16" x2="12" y2="12"></line>
-                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                        </svg>
-                    </div>
-                </div>
-                @error('information_source')
-                    <small class="error-text">{{ $message }}</small>
-                @enderror
-            </div>
+               <!-- Sumber Informasi -->
+                <x-form-select
+                    name="information_source"
+                    label="Sumber Informasi"
+                    :required="true"
+                    :options="\App\Enums\InformationSource::options()"
+                >
+                </x-form-select>
             
             <!-- Kode Referral -->
             <!--<div class="form-group">-->

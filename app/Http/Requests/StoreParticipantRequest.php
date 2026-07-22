@@ -46,7 +46,7 @@ class StoreParticipantRequest extends FormRequest
         
             'training_schedule_id' => 'required|exists:training_schedules,id',
             'shirt_size' => 'required|in:S,M,L,XL,XXL',
-            'information_source' => 'required|in:rekan,poster,banner,mediasocial',
+            'information_source' => 'required|in:Rekan,Poster,Banner,Instagram,Facebook,Tiktok',
         
             'referral_code' => [
                 'nullable',
