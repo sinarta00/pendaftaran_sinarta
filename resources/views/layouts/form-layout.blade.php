@@ -802,8 +802,8 @@ document.addEventListener('DOMContentLoaded', function() {
     phoneInputs.forEach(input => {
         input.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 13) {
-                value = value.slice(0, 13);
+            if (value.length > 15) {
+                value = value.slice(0, 15);
             }
             e.target.value = value;
         });
