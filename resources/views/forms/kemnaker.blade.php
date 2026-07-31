@@ -52,7 +52,7 @@
         <label class="form-label">Nomor Telepon (WhatsApp) <span class="required">*</span></label>
         <div class="input-wrapper">
             <span class="phone-prefix">+62</span>
-            <input type="tel" name="phone" class="form-input" placeholder="8xxxxxxxxxx" value="{{ old('phone') }}" required pattern="[0-9]{10,13}" title="Masukkan nomor telepon yang valid (10-13 digit)">
+            <input type="tel" name="phone" class="form-input" placeholder="8xxxxxxxxxx" value="{{ old('phone') }}" required pattern="[0-9]{10,15}" title="Masukkan nomor telepon yang valid (10-15 digit)">
         </div>
         <small class="help-text">Masukkan nomor WhatsApp aktif (contoh: 81234567890)</small>
         @error('phone')
