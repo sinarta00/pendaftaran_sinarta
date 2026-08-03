@@ -211,6 +211,7 @@ class ParticipantResource extends Resource
                         'company_address' => $record->company_address ?? '-',
                         'company_phone' => $record->company_phone ?? '-',
                         'tanggal_daftar' => $record->created_at->format('d-m-Y H:i'),
+                        'info_referal' => $record->referral_code ?? "-",
                     ]);
                 })
                 ->form(function (Participant $record): array {
@@ -255,6 +256,7 @@ class ParticipantResource extends Resource
                                 Forms\Components\TextInput::make('training_purpose')->label('Tujuan Pelatihan')->disabled(),
                                 Forms\Components\TextInput::make('information_source')->label('Sumber Informasi')->disabled(),
                                 Forms\Components\TextInput::make('referral_code')->label('Kode Referral')->disabled(),
+                                Forms\Components\TextInput::make('info_referal')->label('Info Referral')->disabled(),
                             ])
                             ->columns(2),
                 
