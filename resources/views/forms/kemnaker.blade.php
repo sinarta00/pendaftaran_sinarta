@@ -416,7 +416,7 @@
                 </svg>
             </div>
         </div>
-        <small class="help-text">Isi nama lengkap alumni & no. WhatsApp</small>
+        <small class="help-text">Isi Nama Lengkap Alumni & No. WhatsApp</small>
         @error('referral_info')
             <small class="error-text">{{ $message }}</small>
         @enderror
