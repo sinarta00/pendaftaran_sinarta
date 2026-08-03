@@ -309,7 +309,25 @@
     >
     </x-form-select>
 
-    <!-- Kode Referral -->
+    <!-- Referral -->
+    <div class="form-group">
+        <label class="form-label">Direferensikan oleh <span style="color: #666;">(Opsional)</span></label>
+        <div class="input-wrapper">
+            <input type="text" name="referral_info" class="form-input" placeholder="Contoh: Budi Santoso - 081234567890" value="{{ old('referral_info') }}">
+            <div class="input-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+        </div>
+        <small class="help-text">Isi nama & no. WhatsApp jika Anda mendaftar atas saran seseorang</small>
+        @error('referral_info')
+            <small class="error-text">{{ $message }}</small>
+        @enderror
+    </div>
+
+<!-- Kode Referral -->
     <!--<div class="form-group">-->
     <!--    <label class="form-label">Kode Referral <span style="color: #666;">(Opsional)</span></label>-->
     <!--    <div class="input-wrapper">-->

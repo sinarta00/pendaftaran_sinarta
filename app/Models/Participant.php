@@ -37,7 +37,8 @@ class Participant extends Model
     'referral_code',
     'status',
     'invoice_file',
-    'golongan_darah'
+    'golongan_darah',
+    'referral_info',
 ];
 
     protected $casts = [

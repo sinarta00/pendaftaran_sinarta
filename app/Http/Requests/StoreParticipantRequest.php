@@ -60,6 +60,7 @@ class StoreParticipantRequest extends FormRequest
             ],
         
             'agreement_checkbox' => 'required|accepted',
+            'referral_info' => ['nullable', 'string', 'max:255'],
           ];
           
          if (in_array($this->employment_status, ['Karyawan', 'Kontrak'])) {
