@@ -311,7 +311,7 @@
 
     <!-- Referral -->
     <div class="form-group">
-        <label class="form-label">Direferensikan oleh <span style="color: #666;">(Opsional)</span></label>
+        <label class="form-label">Referral Alumni <span style="color: #666;">(Opsional)</span></label>
         <div class="input-wrapper">
             <input type="text" name="referral_info" class="form-input" placeholder="Contoh: Budi Santoso - 081234567890" value="{{ old('referral_info') }}">
             <div class="input-icon">
@@ -321,7 +321,7 @@
                 </svg>
             </div>
         </div>
-        <small class="help-text">Isi nama & no. WhatsApp jika Anda mendaftar atas saran seseorang</small>
+        <small class="help-text">Isi nama lengkap alumni & no. WhatsApp jika Anda mendaftar atas saran seseorang</small>
         @error('referral_info')
             <small class="error-text">{{ $message }}</small>
         @enderror
