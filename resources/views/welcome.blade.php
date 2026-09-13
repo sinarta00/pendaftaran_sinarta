@@ -511,7 +511,7 @@
             <!-- Perpanjangan AK3U BNSP Card -->
             <div class="program-card card-ak3u-renewal">
                 <div class="card-icon">
-                    🔄
+                    BNSP
                 </div>
                 <h2 class="card-title">Perpanjangan AK3U BNSP</h2>
                 <p class="card-description">
