@@ -12,17 +12,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::statement("
-            ALTER TABLE participants
-            MODIFY COLUMN information_source ENUM(
-                'Rekan',
-                'Poster',
-                'Banner',
-                'Instagram',
-                'Facebook',
-                'Tiktok'
-            ) NOT NULL
-        ");
+        if (DB::getDriverName() === 'mysql') {
+            DB::statement("
+                ALTER TABLE participants
+                MODIFY COLUMN information_source ENUM(
+                    'Rekan',
+                    'Poster',
+                    'Banner',
+                    'Instagram',
+                    'Facebook',
+                    'Tiktok'
+                ) NOT NULL
+            ");
+        }
     }
 
     /**

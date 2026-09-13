@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('skp_registrations', function (Blueprint $table) {
-            $table->string('company_application_later')->after('company_address');
-            $table->string('skp__later')->after('company_application_later');
-            $table->string('license_later')->after('skp__later');
-            $table->string('activity_report_later')->after('license_later');
+            $table->string('company_application_later')->nullable()->after('company_address');
+            $table->string('skp__later')->nullable()->after('company_application_later');
+            $table->string('license_later')->nullable()->after('skp__later');
+            $table->string('activity_report_later')->nullable()->after('license_later');
         });
     }
 

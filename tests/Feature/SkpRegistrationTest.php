@@ -67,8 +67,9 @@ class SkpRegistrationTest extends TestCase
     private function renewalOnlyFiles(): array
     {
         return [
-            'skp_later' => UploadedFile::fake()->create('skp-lama.pdf', 500, 'application/pdf'),
+            'skp__later' => UploadedFile::fake()->create('skp-lama.pdf', 500, 'application/pdf'),
             'license_later' => UploadedFile::fake()->create('lisensi-lama.pdf', 500, 'application/pdf'),
+            'activity_report_later' => UploadedFile::fake()->create('laporan-kegiatan.pdf', 500, 'application/pdf'),
         ];
     }
 
@@ -315,8 +316,9 @@ class SkpRegistrationTest extends TestCase
     public static function renewalOnlyFieldsProvider(): array
     {
         return [
-            'skp_later' => ['skp_later'],
+            'skp__later' => ['skp__later'],
             'license_later' => ['license_later'],
+            'activity_report_later' => ['activity_report_later'],
         ];
     }
 

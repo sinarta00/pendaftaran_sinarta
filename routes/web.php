@@ -14,6 +14,8 @@ use App\Http\Controllers\PopDocumentController;
 $zip = new \ZipArchive();
 
 
+use App\Http\Controllers\Ak3uBnspRenewalController;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -22,6 +24,11 @@ Route::get('/ak3u-kemnaker', [AK3UController::class, 'showKemnakerForm'])->name(
 Route::get('/ak3u-bnsp', [AK3UController::class, 'showBNSPForm'])->name('ak3u.bnsp');
 Route::post('/ak3u/register', [AK3UController::class, 'store'])->name('ak3u.store');
 Route::get('/registration-success', [AK3UController::class, 'success'])->name('registration.success');
+
+// Perpanjangan AK3U BNSP Routes
+Route::get('/perpanjangan-ak3u-bnsp', [Ak3uBnspRenewalController::class, 'showForm'])->name('ak3u.bnsp.perpanjangan');
+Route::post('/perpanjangan-ak3u-bnsp/register', [Ak3uBnspRenewalController::class, 'store'])->name('ak3u.bnsp.perpanjangan.store');
+Route::get('/perpanjangan-ak3u-bnsp-success', [Ak3uBnspRenewalController::class, 'success'])->name('ak3u.bnsp.perpanjangan.success');
 
 Route::get('/documents/{participant}', [DocumentController::class, 'show'])->name('documents.show');
 Route::post('/documents/{participant}', [DocumentController::class, 'store'])->name('documents.store');

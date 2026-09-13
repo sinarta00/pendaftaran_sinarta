@@ -232,6 +232,23 @@
         transform: translateY(-2px);
     }
 
+    .card-ak3u-renewal .card-icon {
+        background: linear-gradient(135deg, #06b6d4, #0e7490);
+    }
+
+    .card-ak3u-renewal .card-title {
+        color: #06b6d4;
+    }
+
+    .card-ak3u-renewal .card-button {
+        background: linear-gradient(135deg, #06b6d4, #0e7490);
+    }
+
+    .card-ak3u-renewal .card-button:hover {
+        background: linear-gradient(135deg, #0e7490, #155e75);
+        transform: translateY(-2px);
+    }
+
     .program-card:hover .card-icon {
         transform: scale(1.1) rotate(5deg);
     }
@@ -484,6 +501,25 @@
                 </p>
                 <a href="{{ route('ak3u.bnsp') }}" class="card-button">
                     <span>Daftar Sekarang</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12,5 19,12 12,19"></polyline>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Perpanjangan AK3U BNSP Card -->
+            <div class="program-card card-ak3u-renewal">
+                <div class="card-icon">
+                    🔄
+                </div>
+                <h2 class="card-title">Perpanjangan AK3U BNSP</h2>
+                <p class="card-description">
+                    Layanan perpanjangan lisensi dan sertifikat Ahli K3 Umum BNSP. 
+                    Proses mudah, cepat, dan resmi untuk memperbarui kualifikasi profesional Anda.
+                </p>
+                <a href="{{ route('ak3u.bnsp.perpanjangan') }}" class="card-button">
+                    <span>Perpanjang Sekarang</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                         <polyline points="12,5 19,12 12,19"></polyline>
